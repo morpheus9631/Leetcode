@@ -1,0 +1,4 @@
+Ans:
+
+  select a.Id from Weather a, Weather b  
+  where (TO_DAYS(a.date)-TO_DAYS(b.date)=1) and (a.temperature > b.temperature);        

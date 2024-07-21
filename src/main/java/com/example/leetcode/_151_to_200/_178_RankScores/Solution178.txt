@@ -1,0 +1,27 @@
+1.先在 MySQL 資料庫中建立一個 Leetcode 的資料庫，並將測試用資料寫入 Scores 資料表。
+
+　　其執行腳本如下：
+    USE LEETCODE;
+ 
+    DROP TABLE IF EXISTS Scores;
+    CREATE TABLE Scores (
+      Id INT NOT NULL PRIMARY KEY,
+      Score FLOAT
+    );
+
+    INSERT INTO Scores (Id, Score) VALUES (1, 3.50);
+    INSERT INTO Scores (Id, Score) VALUES (2, 3.65);
+    INSERT INTO Scores (Id, Score) VALUES (3, 4.00);
+    INSERT INTO Scores (Id, Score) VALUES (4, 3.85);
+    INSERT INTO Scores (Id, Score) VALUES (5, 4.00);
+    INSERT INTO Scores (Id, Score) VALUES (6, 3.65);
+    
+    
+2.解題：rank 為 >= 其 score 的 distinct score 數量。
+  
+    select Score,  
+      (select count(distinct Score) from Scores where Score >= s.Score) as Rank  
+    from Scores s  
+    order by Score desc
+    
+    

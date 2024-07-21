@@ -1,0 +1,30 @@
+Ans1:
+
+  SELECT DISTINCT L1.Num as ConsecutiveNums from Logs L1, Logs L2, Logs L3
+  WHERE (L1.Id = L2.Id + 1 AND L1.Num = L2.Num) AND (L1.Id = L3.Id + 2 AND L1.Num = L3.Num)  
+  
+Ans2:
+  
+  SELECT DISTINCT(L1.Num) as ConsecutiveNums 
+  FROM Logs L1
+  JOIN Logs L2 ON L1.Id + 1 = L2.Id
+  JOIN Logs L3 ON L1.Id + 2 = L3.Id
+  WHERE L1.Num = L2.Num AND L1.Num = L3.Num
+  ORDER BY L1.Num
+
+Ans3:
+
+  select DISTINCT num  as ConsecutiveNums 
+  FROM (
+    select 
+      num, 
+      case when @record = num then @count:=@count+1 
+           when @record <> @record:=num then @count:=1 
+      end as n 
+    from Logs ,(
+      select 
+         @count:=0,
+         @record:=(SELECT num from Logs limit 0,1)
+    ) r 
+  ) a 
+  where a.n>=3  
